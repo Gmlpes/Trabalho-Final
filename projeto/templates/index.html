@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>
+        Doença cardíaca:
+        <br>
+        dos dados à classificação.
+    </h1>
+    <section>
+        <h2>
+            Enviar dados
+        </h2>
+        <form action="/analise" method="post" enctype="multipart/form-data">
+            <label>
+                Arquivo CSV
+                <input type="file" name="arquivo" accept=".csv" required>
+            </label>
+            <div class="actions">
+                <button type="submit">
+                    Analisar arquivo
+                </button>
+                <a class="button-link" href="/analise">
+                    Explorar a base incluída
+                </a>
+            </div>
+        </form>
+    </section>
+    <section>
+        <h2>
+            O que o modelo responde?
+        </h2>
+        <p>
+            Idade, pressão em repouso, colesterol e frequência máxima no exercício permitem classificar num &gt; 0 nesta amostra? Os dados de exercício devem estar disponíveis antes da previsão.
+        </p>
+        <p>
+            O upload atualiza análises e gráficos. O modelo permanece treinado na versão Cleveland incluída; sua identificação está na página Modelos.
+        </p>
+    </section>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>
+        Comparação de modelos
+    </h1>
+    <p>
+        Modelo escolhido:
+        <strong>
+            {{r.modelo}}
+        </strong>
+        . {{r.criterio}}
+    </p>
+    <p>
+        Treino: {{r.treino}} registros (80%). Teste: {{r.teste}} (20%), com {{r.classes_teste['0']}} ausências e {{r.classes_teste['1']}} presenças. Divisão estratificada, random_state=42.
+    </p>
+    <p>
+        A classe mais frequente representa {{'%.1f'|format(r.proporcao_majoritaria*100)}}% do teste. Essa é a referência para comparar a acurácia.
+    </p>
+    <table>
+        <tr>
+            <th>
+                Modelo
+            </th>
+            <th>
+                Acertos no treino
+            </th>
+            <th>
+                Acertos no teste
+            </th>
+            <th>
+                Sensibilidade no teste
+            </th>
+            <th>
+                Validação no treino*
+            </th>
+        </tr>
+        {% for name,m in r.resultados.items() %}
+            <tr>
+                <td>
+                    {{name}}
+                </td>
+                <td>
+                    {{'%.1f'|format(m.acuracia_treino*100)}}%
+                </td>
+                <td>
+                    {{'%.1f'|format(m.acuracia*100)}}%
+                </td>
+                <td>
+                    {{'%.1f'|format(m.sensibilidade*100)}}%
+                </td>
+                <td>
+                    {{'%.1f'|format(m.cv_media*100)}}%
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>
+        *Acurácia balanceada média em cinco partes do treino: dá peso igual às duas classes e define a escolha do modelo. O teste fica reservado para a avaliação final.
+    </p>
+    {% for name,m in r.resultados.items() %}
+        <section>
+            <h2>
+                {{name}}: acertos e erros
+            </h2>
+            <table>
+                <tr>
+                    <th>
+                        Real / previsto
+                    </th>
+                    <th>
+                        Ausência
+                    </th>
+                    <th>
+                        Presença
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Ausência
+                    </th>
+                    <td>
+                        {{m.matriz[0][0]}}
+                    </td>
+                    <td>
+                        {{m.matriz[0][1]}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Presença
+                    </th>
+                    <td>
+                        {{m.matriz[1][0]}}
+                    </td>
+                    <td>
+                        {{m.matriz[1][1]}}
+                    </td>
+                </tr>
+            </table>
+            <p>
+                {{m.matriz[1][0]}} casos de presença foram classificados como ausência (falsos negativos). {{m.matriz[0][1]}} casos de ausência foram classificados como presença (falsos positivos).
+            </p>
+        </section>
+    {% endfor %}
+    <div class="actions page-actions">
+        <a href="/analise">
+            Voltar à análise
+        </a>
+        <a class="button-link" href="/previsao">
+            Fazer previsão
+        </a>
+    </div>
+{% endblock %}

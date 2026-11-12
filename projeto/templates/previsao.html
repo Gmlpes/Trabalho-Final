@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>
+        Simular uma classificação
+    </h1>
+    <p>
+        Use medidas já disponíveis, incluindo a frequência máxima obtida no exercício. Esta demonstração não avalia seu risco pessoal.
+    </p>
+    <section>
+        <form method="post">
+            {% for name,label,limits in fields %}
+                <label>
+                    {{label}}
+                    <input name="{{name}}" type="number" step="any" min="{{limits[0]}}" max="{{limits[1]}}" required value="{{request.form.get(name,'')}}">
+                </label>
+            {% endfor %}
+            <button>
+                Gerar previsão
+            </button>
+        </form>
+    </section>
+    {% if result is not none %}
+        <section role="status">
+            <h2>
+                Resultado da previsão: {{'presença de doença cardíaca' if result else 'ausência de doença cardíaca'}}
+            </h2>
+        </section>
+    {% endif %}
+    <div class="actions page-actions">
+        <a href="/">
+            Voltar ao início
+        </a>
+        <a href="/avaliacao">
+            Ver modelos
+        </a>
+    </div>
+{% endblock %}

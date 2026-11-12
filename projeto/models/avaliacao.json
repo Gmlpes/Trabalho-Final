@@ -1,0 +1,76 @@
+{
+  "modelo": "Regressão logística",
+  "base": "Cleveland da versão Kaggle incluída em data/cleveland.csv",
+  "criterio": "Maior acurácia balanceada média em validação cruzada somente no treino; teste reservado para avaliação final.",
+  "treino": 243,
+  "teste": 61,
+  "classes_teste": {
+    "0": 33,
+    "1": 28
+  },
+  "proporcao_majoritaria": 0.5409836065573771,
+  "limpeza": {
+    "recebidos": 304,
+    "fora_cleveland": 0,
+    "antes": 304,
+    "colunas": 5,
+    "tipos_originais": {
+      "age": "int64",
+      "trestbps": "float64",
+      "chol": "float64",
+      "thalach": "float64",
+      "num": "int64"
+    },
+    "ausentes_originais": {
+      "age": 0,
+      "trestbps": 0,
+      "chol": 0,
+      "thalach": 0,
+      "num": 0
+    },
+    "alvos_ausentes": 0,
+    "duplicatas": 0,
+    "depois": 304,
+    "ausentes": {
+      "age": 0,
+      "trestbps": 0,
+      "chol": 0,
+      "thalach": 0,
+      "num": 0
+    }
+  },
+  "resultados": {
+    "Regressão logística": {
+      "cv_media": 0.6847820456516109,
+      "acuracia_treino": 0.6954732510288066,
+      "acuracia": 0.7377049180327869,
+      "sensibilidade": 0.6785714285714286,
+      "matriz": [
+        [
+          26,
+          7
+        ],
+        [
+          9,
+          19
+        ]
+      ]
+    },
+    "Random Forest": {
+      "cv_media": 0.6635992027296376,
+      "acuracia_treino": 0.8189300411522634,
+      "acuracia": 0.7213114754098361,
+      "sensibilidade": 0.7857142857142857,
+      "matriz": [
+        [
+          22,
+          11
+        ],
+        [
+          6,
+          22
+        ]
+      ]
+    }
+  }
+}

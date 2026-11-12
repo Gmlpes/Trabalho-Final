@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>
+        Análise dos dados
+    </h1>
+    <p>
+        Fonte: {{source}}
+    </p>
+    <section>
+        <h2>
+            Resumo dos dados
+        </h2>
+        <p>
+            {{info.recebidos}} registros recebidos · {{info.colunas}} colunas · {{info.depois}} registros após o tratamento.
+        </p>
+        <p>
+            {{info.duplicatas}} duplicatas removidas; {{info.alvos_ausentes}} registros sem resultado excluídos; {{info.ausentes.values()|sum}} valores ausentes nas medidas utilizadas.
+        </p>
+        {% if info.fora_cleveland %}
+            <p>
+                {{info.fora_cleveland}} registros de outros centros foram retirados para analisar somente Cleveland.
+            </p>
+        {% endif %}
+    </section>
+    {% for plot in plots %}
+        <section class="chart-panel">
+            <img alt="{{['Distribuição das idades','Comparação das classes registradas','Frequência máxima média por resultado registrado'][loop.index0]}}" src="data:image/png;base64,{{plot}}">
+            <p>
+                {{findings[loop.index0]}}
+            </p>
+        </section>
+    {% endfor %}
+    <section>
+        <h2>
+            Exemplo de 10 registros
+        </h2>
+        <p>
+            Dados da base após o tratamento. “Resultado na base” é a informação original, não uma previsão do modelo.
+        </p>
+        {{sample|safe}}
+    </section>
+    <section>
+        <h2>
+            Resumo das medidas
+        </h2>
+        <p>
+            Média, menor e maior valor entre as medidas disponíveis. Valores ausentes não entram nos cálculos.
+        </p>
+        {{stats|safe}}
+    </section>
+    <div class="actions page-actions">
+        <a href="/">
+            Enviar outro arquivo
+        </a>
+        <a class="button-link" href="/avaliacao">
+            Comparar modelos
+        </a>
+        <a class="button-link" href="/previsao">
+            Fazer previsão
+        </a>
+    </div>
+{% endblock %}
